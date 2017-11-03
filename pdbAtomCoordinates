@@ -1,0 +1,22 @@
+#!/bin/bash
+#Written By Alessandra Vertress
+
+if test $# -eq 1 #if there arg = 1
+then
+	if [ ${1: -4} == ".pdb" ] #if arg1 is a pdb file
+	then
+		if test -e $1  #if file exists
+		then #return the ATOM's coordinates and ID
+			cat $1 | grep "^ATOM" | awk 'BEGIN{ FS="";OFS=""; } { print $7,$8,$9,$10,$11, $31,$32,$33,$34,$35,$36,$37,$38, $39,$40,$41,$42,$43,$44,$45, $46,$47,$48,$49,$50,$51,$52,$53,$54 }'
+		else
+			echo "Usage: $1 does not exist" #file does not exist
+			exit
+		fi
+	else
+		echo "Usage: Cannot open $1 for reading. Please use a .pdb file." #file is not a pdb file
+		exit
+	fi
+else
+	echo "Usage: $atomcoordinates <filename.pdb> " #error #usage error, need more arguments
+	exit
+fi
